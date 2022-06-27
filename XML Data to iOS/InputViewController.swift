@@ -34,7 +34,7 @@ class InputViewController: UIViewController {
     
     func display() {
         //Text view
-        textView.frame = CGRect(x: 20.0, y: 90.0, width: 250.0, height: 100.0)
+        textView.frame = CGRect(x: 20.0, y: 90.0, width: view.bounds.width, height: view.bounds.height)
         textView.contentInsetAdjustmentBehavior = .automatic
         textView.center = self.view.center
         textView.textAlignment = NSTextAlignment.justified

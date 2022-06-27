@@ -42,6 +42,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         myTableView = UITableView(frame: CGRect(x: 0, y: 0, width: displayWidth, height: displayHeight))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        myTableView.isPrefetchingEnabled = true
         myTableView.dataSource = self
         myTableView.delegate = self
         
@@ -144,8 +145,6 @@ extension ViewController: XMLParserDelegate {
                 
             }
             task.resume()
-        }else{
-            print("invalid URL")
         }
     }
     
