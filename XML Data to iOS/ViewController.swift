@@ -81,12 +81,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.textLabel!.text = "\(StationName[indexPath.row])"
         
         
-        let url = URL(string: Logo[indexPath.row])
-        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-        cell.imageView?.image = UIImage(data: data!)
+//        let url = URL(string: Logo[indexPath.row])
+//        let data = try? Data(contentsOf: url!) 
+//        cell.imageView?.image = UIImage(data: data!)
         
         return cell
     }
+    
     
     
 }
