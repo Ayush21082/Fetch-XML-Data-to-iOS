@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 var url = String()
 
@@ -79,7 +80,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
         cell.textLabel!.text = "\(StationName[indexPath.row])"
-        
+        if let url = URL(string: Logo[indexPath.row]) {
+            cell.imageView?.kf.setImage(with: url)
+        }
         
 //        let url = URL(string: Logo[indexPath.row])
 //        let data = try? Data(contentsOf: url!) 

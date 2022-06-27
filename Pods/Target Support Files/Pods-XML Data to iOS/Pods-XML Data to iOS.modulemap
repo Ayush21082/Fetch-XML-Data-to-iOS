@@ -1,0 +1,6 @@
+framework module Pods_XML_Data_to_iOS {
+  umbrella header "Pods-XML Data to iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
