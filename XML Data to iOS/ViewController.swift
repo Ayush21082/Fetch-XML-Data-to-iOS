@@ -96,53 +96,57 @@ extension ViewController: XMLParserDelegate {
         
         showActivityIndicatory()
         
-        let url = URL(string: url)!
-        let request=URLRequest(url: url)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                print("dataTaskWithRequest error: \(error)")
-                return
-            }
-            guard let data = data else {
-                print("dataTaskWithRequest data is nil")
-                return
-            }
+        if let url = URL(string: url) {
+            let request=URLRequest(url: url)
             
             
-            
-            let parser = XMLParser(data: data)
-            parser.delegate = self
-            if parser.parse() {
-                
-                
-                
-                var set = Set<String>()
-                let arraySet: [[String : String]] = self.results!.compactMap {
-                    guard let name = $0["Logo"] else {return nil }
-                    return set.insert(name).inserted ? $0 : nil
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print("dataTaskWithRequest error: \(error)")
+                    return
+                }
+                guard let data = data else {
+                    print("dataTaskWithRequest data is nil")
+                    return
                 }
                 
-                self.Logo = arraySet.compactMap { $0["Logo"] }
-                self.StationName = arraySet.compactMap { $0["StationName"] }
-                self.StationId = arraySet.compactMap { $0["StationId"] }
                 
-                self.results = arraySet
-    
-    
-                print(self.results!)
+                
+                let parser = XMLParser(data: data)
+                parser.delegate = self
+                if parser.parse() {
+                    
+                    
+                    
+                    var set = Set<String>()
+                    let arraySet: [[String : String]] = self.results!.compactMap {
+                        guard let name = $0["Logo"] else {return nil }
+                        return set.insert(name).inserted ? $0 : nil
+                    }
+                    
+                    self.Logo = arraySet.compactMap { $0["Logo"] }
+                    self.StationName = arraySet.compactMap { $0["StationName"] }
+                    self.StationId = arraySet.compactMap { $0["StationId"] }
+                    
+                    self.results = arraySet
+                    
+                    
+                    print(self.results!)
+                    
+                }
+                
+                DispatchQueue.main.async {
+                    self.activityView.stopAnimating()
+                    self.activityView.removeFromSuperview()
+                    self.myTableView.reloadData()
+                    
+                }
                 
             }
-            
-            DispatchQueue.main.async {
-                self.activityView.stopAnimating()
-                self.activityView.removeFromSuperview()
-                self.myTableView.reloadData()
-                
-            }
-            
+            task.resume()
+        }else{
+            print("invalid URL")
         }
-        task.resume()
     }
     
     
